@@ -54,10 +54,6 @@ public class Embarcacion {
         return oceano.equals(embarcacionEnemiga.getOceano()) && oceano.estanCerca(embarcacionEnemiga.getOceano());
     }
 
-    public void entrarEnContienda(TipoContienda tipoContienda, Embarcacion embarcacionEnemiga){
-        tipoContienda.entrarEnContienda(this, embarcacionEnemiga);
-    }
-
     public Oceano getOceano() {
         return oceano;
     }
@@ -68,9 +64,9 @@ public class Embarcacion {
         cocinerosYPiratas.forEach(t -> t.aumentarCorajeBase(cantidadCoraje));
     }
 
-    public void matarIntegranteMasCobarde(Function<Tripulante, Double> criteria) {
+    public void matarIntegranteMasCobarde() {
         Tripulante triuplanteAMatar
-                = cocinerosYPiratas.stream().min(Comparator.comparing(criteria)).get();
+                = cocinerosYPiratas.stream().min(Comparator.comparing(t -> t.calcularCoraje(this))).get();
         cocinerosYPiratas.remove(triuplanteAMatar);
     }
 
